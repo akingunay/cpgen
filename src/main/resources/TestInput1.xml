@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CPGenInput>
+    <GeneratingAgent>Customer</GeneratingAgent>
+    <Goals>
+        <Goal>
+            <Postcondition>
+                <Proposition>HaveFurniture</Proposition>
+            </Postcondition>
+        </Goal>
+    </Goals>
+
+    <Capabilities>
+<!--        <Capability>
+            <Precondition>
+                <Proposition></Proposition>
+                <Proposition></Proposition>
+            </Precondition>
+            <Postcondition>
+                <Proposition></Proposition>
+            </Postcondition>
+        </Capability>-->
+        <Capability>
+            <Postcondition>
+                <Proposition>SecondBuilderPaid</Proposition>
+            </Postcondition>
+        </Capability>
+    </Capabilities>
+
+    <Services>
+        <Service>
+            <ProvidingAgent>Retailer</ProvidingAgent>
+            <Postcondition>
+                <Proposition>HaveMaterials</Proposition>
+            </Postcondition>
+        </Service>
+        <Service>
+            <ProvidingAgent>SecondBuilder</ProvidingAgent>
+            <Precondition>
+                <Proposition>MaterialsProvided</Proposition>
+                <Proposition>ToolsProvided</Proposition>
+            </Precondition>
+            <Postcondition>
+                <Proposition>HaveFurniture</Proposition>
+            </Postcondition>
+        </Service>
+<!--        <Service>
+            <ProvidingAgent></ProvidingAgent>
+            <Precondition>
+                <Proposition></Proposition>
+                <Proposition></Proposition>
+            </Precondition>
+            <Postcondition>
+                <Proposition></Proposition>
+            </Postcondition>
+        </Service>-->
+    </Services>
+            
+    <Incentives>
+        <Incentive>
+            <IncentivizedAgent>SecondBuilder</IncentivizedAgent>
+            <Precondition>
+                <Proposition>SecondBuilderPaid</Proposition>
+            </Precondition>
+            <Postcondition>
+                <Proposition>HaveFurniture</Proposition>
+            </Postcondition>
+        </Incentive>
+<!--        <Incentive>
+            <IncentivizedAgent></IncentivizedAgent>
+            <Precondition>
+                <Proposition></Proposition>
+                <Proposition></Proposition>
+            </Precondition>
+            <Postcondition>
+                <Proposition></Proposition>
+            </Postcondition>
+        </Incentive>-->
+    </Incentives>
+    
+        
+</CPGenInput>
