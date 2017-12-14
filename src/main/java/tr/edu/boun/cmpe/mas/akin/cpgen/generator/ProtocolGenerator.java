@@ -5,7 +5,7 @@ import java.util.Set;
 
 /**
  *
- * @author akin
+ * @author Akin Gunay
  */
 public interface ProtocolGenerator {
     public Set<Protocol> generateProtocols();

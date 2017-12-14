@@ -9,7 +9,7 @@ public class SetPrinter {
 
     private SetPrinter() {}
     
-    public static <T> String setPrinter(Set<T> set) {
+    public static <T> String printSet(Set<T> set) {
         StringBuilder str = new StringBuilder("{");
         for(T element : set) {
             str.append(element).append(", ");

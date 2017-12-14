@@ -12,6 +12,7 @@ import java.util.Queue;
 import java.util.Set;
 import tr.edu.boun.cmpe.mas.akin.cpgen.util.ArgumentValidator;
 import tr.edu.boun.cmpe.mas.akin.cpgen.data.InputData;
+import tr.edu.boun.cmpe.mas.akin.cpgen.protocol.Conjunction;
 
 /**
  * Implementation of the ProtocolBased algorithm in "Akın Günay, Michael Winikoff, 
@@ -59,7 +60,7 @@ public class ProtocolBasedProtocolGenerator implements ProtocolGenerator {
             updatedSupportedGoals.add(currentGoal);
             for (Capability capability : inputData.getCapabilitiesForPostcondition(currentGoal)) {
                 Queue<Proposition> updatedPendingGoals = new ArrayDeque<>(pendingGoals);
-                addUnsupportedGoals(updatedPendingGoals, supportedGoals, capability.getPreconditions());
+                addUnsupportedGoals(updatedPendingGoals, supportedGoals, capability.getPrecondition());
                 protocols.addAll(findSupport(updatedPendingGoals, updatedSupportedGoals, generatedProtocol));
             }
         }
@@ -75,10 +76,11 @@ public class ProtocolBasedProtocolGenerator implements ProtocolGenerator {
                 for (Incentive incentive : inputData.getIncentivesForPostcondition(currentGoal)) {
                     if (incentive.getAgent().equals(service.getAgent())) {
                         Queue<Proposition> updatedPendingGoals = new ArrayDeque<>(pendingGoals);
-                        addUnsupportedGoals(updatedPendingGoals, supportedGoals, service.getPreconditions());
-                        addUnsupportedGoals(updatedPendingGoals, supportedGoals, incentive.getPreconditions());
+                        addUnsupportedGoals(updatedPendingGoals, supportedGoals, service.getPrecondition());
+                        addUnsupportedGoals(updatedPendingGoals, supportedGoals, incentive.getPrecondition());
                         Protocol updatedGeneratedProtocol = new Protocol(generatedProtocol);
-                        updatedGeneratedProtocol.addCommitment((new Commitment.Builder()).build(service.getAgent(), inputData.getGeneratorAgent(), service.getPreconditions(), incentive.getPreconditions(), currentGoal));
+                        updatedGeneratedProtocol.addCommitment(new Commitment(service.getAgent(), inputData.getGeneratorAgent(), 
+                                Conjunction.compose(service.getPrecondition(), incentive.getPrecondition()), currentGoal));
                         protocols.addAll(findSupport(updatedPendingGoals, updatedSupportedGoals, updatedGeneratedProtocol));
                     }
                 }
@@ -87,7 +89,7 @@ public class ProtocolBasedProtocolGenerator implements ProtocolGenerator {
         return protocols;
     }
     
-    private void addUnsupportedGoals(Queue<Proposition> pendingGoals, Set<Proposition> supportedGoals, Set<Proposition> newGoals) {
+    private void addUnsupportedGoals(Queue<Proposition> pendingGoals, Set<Proposition> supportedGoals, Conjunction newGoals) {
         for (Proposition newGoal : newGoals) {
             if (!supportedGoals.contains(newGoal) && !pendingGoals.contains(newGoal)) {
                 pendingGoals.offer(newGoal);

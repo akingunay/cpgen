@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import tr.edu.boun.cmpe.mas.akin.cpgen.protocol.Capability;
+import tr.edu.boun.cmpe.mas.akin.cpgen.protocol.Conjunction;
 import tr.edu.boun.cmpe.mas.akin.cpgen.protocol.Incentive;
 import tr.edu.boun.cmpe.mas.akin.cpgen.protocol.Proposition;
 import tr.edu.boun.cmpe.mas.akin.cpgen.protocol.Service;
@@ -99,25 +100,15 @@ public final class InputDataGenerator {
     }
     
     private Service createService(Proposition goal, List<Proposition> nextLevelGoals) {
-        return Service.newService(providerAgent, createPrecondition(nextLevelGoals), goal);
+        return new Service(providerAgent, new Conjunction(nextLevelGoals), goal);
     }
     
     private Incentive createIncentive(Proposition goal, List<Proposition> nextLevelGoals) {
-        return Incentive.newIncentive(providerAgent, createPrecondition(nextLevelGoals), goal);
+        return new Incentive(providerAgent, new Conjunction(nextLevelGoals), goal);
     }
     
     private Capability createCapability(Proposition goal) {
-        return Capability.newCapability(new HashSet<Proposition>(), goal);
-    }
-    
-    private Set<Proposition> createPrecondition(List<Proposition> nextLevelGoals) {
-        Set<Proposition> precondition = new HashSet<>(rho);
-        for (int i = 0 ; i < rho ; i++) {
-            Proposition proposition = createProposition();
-            precondition.add(proposition);
-            nextLevelGoals.add(proposition);
-        }
-        return precondition;
+        return new Capability(new Conjunction(), goal);
     }
     
     private Proposition createProposition() {
@@ -164,17 +155,17 @@ public final class InputDataGenerator {
         } 
         
         public void setAgent(String generatorAgent) {
-            ArgumentValidator.validateNotNullAndNotEmpty(generatorAgent, "generatorAgent");
+            ArgumentValidator.validateNotNullAndNotEmptyString(generatorAgent, "generatorAgent");
             this.generatorAgent = generatorAgent;
         }
 
         public void setProviderAgent(String providerAgent) {
-            ArgumentValidator.validateNotNullAndNotEmpty(providerAgent, "providerAgent");
+            ArgumentValidator.validateNotNullAndNotEmptyString(providerAgent, "providerAgent");
             this.providerAgent = providerAgent;
         }
 
         public void setPropositionPrefix(String propositionPrefix) {
-            ArgumentValidator.validateNotNullAndNotEmpty(propositionPrefix, "propositionPrefix");
+            ArgumentValidator.validateNotNullAndNotEmptyString(propositionPrefix, "propositionPrefix");
             this.propositionPrefix = propositionPrefix;
         }
 

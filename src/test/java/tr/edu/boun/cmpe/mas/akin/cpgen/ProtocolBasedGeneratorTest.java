@@ -15,20 +15,20 @@ public class ProtocolBasedGeneratorTest {
     
     @Test
     public void testGenerateProtocolsForUnsatisfiableData() {
-        ProtocolBasedProtocolGenerator generator = new ProtocolBasedProtocolGenerator(TestData.getUnsatisfiableDataSet());
-        Set<Protocol> protocols = generator.generateProtocols();
-        for (Protocol protocol : protocols) {
-            System.out.println(protocol);
-        }    
+//        ProtocolBasedProtocolGenerator generator = new ProtocolBasedProtocolGenerator(TestData.getUnsatisfiableDataSet());
+//        Set<Protocol> protocols = generator.generateProtocols();
+//        for (Protocol protocol : protocols) {
+//            System.out.println(protocol);
+//        }    
     }
     
     @Test
     public void testGenerateProtocolsForRunningExample() {
-        ProtocolBasedProtocolGenerator generator = new ProtocolBasedProtocolGenerator(TestData.getRunningExampleDataSet());
-        Set<Protocol> protocols = generator.generateProtocols();
-//        for (Protocol protocol : protocols) {
-//            System.out.println(protocol);
-//        }
+//        ProtocolBasedProtocolGenerator generator = new ProtocolBasedProtocolGenerator(TestData.getRunningExampleDataSet());
+//        Set<Protocol> protocols = generator.generateProtocols();
+////        for (Protocol protocol : protocols) {
+////            System.out.println(protocol);
+////        }
     }
     
 }

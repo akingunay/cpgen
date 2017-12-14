@@ -1,5 +1,6 @@
 package tr.edu.boun.cmpe.mas.akin.cpgen.util;
 
+import tr.edu.boun.cmpe.mas.akin.cpgen.data.InputData;
 import tr.edu.boun.cmpe.mas.akin.cpgen.protocol.Proposition;
 import tr.edu.boun.cmpe.mas.akin.cpgen.protocol.Service;
 import tr.edu.boun.cmpe.mas.akin.cpgen.protocol.Incentive;
@@ -8,10 +9,10 @@ import java.util.HashSet;
 import java.util.Set;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
-import tr.edu.boun.cmpe.mas.akin.cpgen.data.InputData;
+import tr.edu.boun.cmpe.mas.akin.cpgen.protocol.Conjunction;
 
 /**
- * A simple parser for creating an InputData object from an XML input file.
+ * A simple XML parser for creating an InputData object from an input file.
  * 
  * @author Akin Gunay
  */
@@ -80,11 +81,11 @@ public class XMLInputDataReader extends DefaultHandler {
         } else if (qName.equals(GOAL)) {
             inputData.addGoal(currentPostcondition);
         } else if (qName.equals(CAPABLITY)) {
-            inputData.addCapability(Capability.newCapability(currentPrecondition, currentPostcondition));
+            inputData.addCapability(new Capability(new Conjunction(currentPrecondition), currentPostcondition));
         } else if (qName.equals(SERVICE)) {
-            inputData.addService(Service.newService(currentAgent, currentPrecondition, currentPostcondition));
+            inputData.addService(new Service(currentAgent, new Conjunction(currentPrecondition), currentPostcondition));
         } else if (qName.equals(INCENTIVE)) {
-            inputData.addIncentive(Incentive.newIncentive(currentAgent, currentPrecondition, currentPostcondition));
+            inputData.addIncentive(new Incentive(currentAgent, new Conjunction(currentPrecondition), currentPostcondition));
         } else {
             // skip other elements
         }

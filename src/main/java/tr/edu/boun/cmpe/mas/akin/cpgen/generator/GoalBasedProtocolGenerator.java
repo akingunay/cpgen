@@ -15,6 +15,7 @@ import java.util.Queue;
 import java.util.Set;
 import tr.edu.boun.cmpe.mas.akin.cpgen.util.ArgumentValidator;
 import tr.edu.boun.cmpe.mas.akin.cpgen.data.InputData;
+import tr.edu.boun.cmpe.mas.akin.cpgen.protocol.Conjunction;
 
 /**
  * Implementation of the GoalBased algorithm in "Akın Günay, Michael Winikoff, 
@@ -59,16 +60,17 @@ public class GoalBasedProtocolGenerator implements ProtocolGenerator {
     private Set<Protocol> findSupportForSingleGoal(Proposition goal) {
         Set<Protocol> protocols = new HashSet<>();
         for (Capability capability : inputData.getCapabilitiesForPostcondition(goal)) {
-            protocols.addAll(findSupport(new ArrayDeque<>(capability.getPreconditions())));
+            protocols.addAll(findSupport(new ArrayDeque<>(capability.getPrecondition())));
         }
         for (Service service : inputData.getServicesForPostcondition(goal)) {
             for (Incentive incentive : inputData.getIncentivesForPostcondition(goal)) {
                 if (incentive.getAgent().equals(service.getAgent())) {
                     Queue<Proposition> newGoals = new ArrayDeque<>();
-                    newGoals.addAll(service.getPreconditions());
-                    newGoals.addAll(incentive.getPreconditions());
+                    newGoals.addAll(service.getPrecondition());
+                    newGoals.addAll(incentive.getPrecondition());
                     Set<Protocol> newProtocols = new HashSet<>(findSupport(newGoals));
-                    Commitment newCommitment = (new Commitment.Builder()).build(service.getAgent(), inputData.getGeneratorAgent(), service.getPreconditions(), incentive.getPreconditions(), goal);
+                    Commitment newCommitment = new Commitment(service.getAgent(), inputData.getGeneratorAgent(), 
+                            Conjunction.compose(service.getPrecondition(), incentive.getPrecondition()), goal);
                     for (Protocol protocol : newProtocols) {
                         protocol.addCommitment(newCommitment);
                     }

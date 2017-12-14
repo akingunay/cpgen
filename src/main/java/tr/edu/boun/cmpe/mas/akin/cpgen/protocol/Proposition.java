@@ -11,7 +11,7 @@ public class Proposition {
     private final String label;
     
     public Proposition(String label) {
-        ArgumentValidator.validateNotNullAndNotEmpty(label, "label");
+        ArgumentValidator.validateNotNullAndNotEmptyString(label, "label");
         this.label = label;
     }
     
@@ -21,7 +21,7 @@ public class Proposition {
 
     @Override
     public int hashCode() {
-        return label.hashCode();
+        return Objects.hashCode(label);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Proposition {
             return false;
         }
         final Proposition other = (Proposition) obj;
-        return this.label.equals(other.label);
+        return Objects.equals(this.label, other.label);
     }
 
     @Override

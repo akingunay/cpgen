@@ -26,7 +26,7 @@ public class InputData {
     private final Map<Proposition, Set<Incentive>> incentives;
     
     public static InputData newInputData(String agent) {
-        ArgumentValidator.validateNotNullAndNotEmpty(agent, "agent");
+        ArgumentValidator.validateNotNullAndNotEmptyString(agent, "agent");
         return new InputData(agent);
     }
     
